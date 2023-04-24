@@ -1,0 +1,27 @@
+server:
+  port: 5000
+  servlet:
+    encoding:
+      charset: utf-8
+      force: true
+
+spring:
+  datasource:
+    url: jdbc:mariadb://${rds.hostname}:${rds.port}/${rds.db.name}?allowPublicKeyRetrieval=true&useSSL=false
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: ${rds.username}
+    password: ${rds.password}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      default_batch_fetch_size: 100
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+logging:
+  level:
+    '[shop.mtcoding.restend]': INFO # DEBUG 레벨부터 에러 확인할 수 있게 설정하기
+
+file:
+  path: ./upload/ # UPLOAD 폴더 상대경로 / AWS에 S3 사용하는게 좋음
