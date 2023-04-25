@@ -46,11 +46,7 @@ public class MyLogAdvice {
         for (Object arg : args) {
             if(arg instanceof Exception){
                 Exception e = (Exception) arg;
-                MyUserDetails myUserDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication();
-
-                if(myUserDetails != null){
-                    log.error("에러 : "+e.getMessage());
-                }
+                log.error("에러 : "+e.getMessage());
             }
         }
     }
