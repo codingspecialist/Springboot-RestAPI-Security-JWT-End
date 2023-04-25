@@ -6,7 +6,7 @@ import shop.mtcoding.restend.model.user.User;
 import java.time.LocalDateTime;
 
 public class DummyEntity {
-    protected User newUser(String username, String fullName){
+    public User newUser(String username, String fullName){
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return User.builder()
                 .username(username)
@@ -18,7 +18,7 @@ public class DummyEntity {
                 .build();
     }
 
-    protected User newMockUser(Long id, String username, String fullName){
+    public User newMockUser(Long id, String username, String fullName){
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return User.builder()
                 .id(id)

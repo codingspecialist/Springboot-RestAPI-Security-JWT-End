@@ -1,4 +1,4 @@
-package shop.mtcoding.restend.mock;
+package shop.mtcoding.restend.core;
 
 import org.springframework.security.test.context.support.WithSecurityContext;
 

@@ -3,8 +3,6 @@ package shop.mtcoding.restend.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -12,21 +10,18 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import shop.mtcoding.restend.core.advice.MyLogAdvice;
 import shop.mtcoding.restend.core.advice.MyValidAdvice;
 import shop.mtcoding.restend.core.auth.jwt.MyJwtProvider;
-import shop.mtcoding.restend.core.auth.session.MyUserDetails;
 import shop.mtcoding.restend.core.config.MyFilterRegisterConfig;
 import shop.mtcoding.restend.core.config.MySecurityConfig;
 import shop.mtcoding.restend.core.dummy.DummyEntity;
 import shop.mtcoding.restend.dto.user.UserRequest;
 import shop.mtcoding.restend.dto.user.UserResponse;
-import shop.mtcoding.restend.mock.MyWithMockUser;
+import shop.mtcoding.restend.core.MyWithMockUser;
 import shop.mtcoding.restend.model.user.User;
 import shop.mtcoding.restend.service.UserService;
 
@@ -120,7 +115,7 @@ public class UserControllerUnitTest extends DummyEntity {
         // stub
         User cos = newMockUser(1L,"cos", "코스");
         UserResponse.DetailOutDTO detailOutDTO = new UserResponse.DetailOutDTO(cos);
-        Mockito.when(userService.유저상세보기(any())).thenReturn(detailOutDTO);
+        Mockito.when(userService.회원상세보기(any())).thenReturn(detailOutDTO);
 
         // when
         ResultActions resultActions = mvc

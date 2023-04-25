@@ -103,7 +103,7 @@ public class UserServiceTest extends DummyEntity {
         Mockito.when(userRepository.findById(any())).thenReturn(Optional.of(cos));
 
         // when
-        UserResponse.DetailOutDTO detailOutDTO  = userService.유저상세보기(id);
+        UserResponse.DetailOutDTO detailOutDTO  = userService.회원상세보기(id);
 
         // then
         Assertions.assertThat(detailOutDTO.getId()).isEqualTo(1L);

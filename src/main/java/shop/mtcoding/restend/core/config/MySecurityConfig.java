@@ -1,8 +1,8 @@
 package shop.mtcoding.restend.core.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,9 +14,11 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import shop.mtcoding.restend.core.auth.jwt.MyJwtAuthorizationFilter;
+import shop.mtcoding.restend.core.exception.Exception401;
+import shop.mtcoding.restend.core.exception.Exception403;
 import shop.mtcoding.restend.core.util.MyFilterResponseUtil;
-import shop.mtcoding.restend.dto.ResponseDTO;
 
+@Slf4j
 @Configuration
 public class MySecurityConfig {
 
@@ -65,12 +67,14 @@ public class MySecurityConfig {
 
         // 8. 인증 실패 처리
         http.exceptionHandling().authenticationEntryPoint((request, response, authException) -> {
-            MyFilterResponseUtil.unAuthorized(response, authException);
+            log.warn("인증되지 않은 사용자가 자원에 접근하려 합니다 : "+authException.getMessage());
+            MyFilterResponseUtil.unAuthorized(response, new Exception401("인증되지 않았습니다"));
         });
 
         // 10. 권한 실패 처리
         http.exceptionHandling().accessDeniedHandler((request, response, accessDeniedException) -> {
-            MyFilterResponseUtil.forbidden(response, accessDeniedException);
+            log.warn("권한이 없는 사용자가 자원에 접근하려 합니다 : "+accessDeniedException.getMessage());
+            MyFilterResponseUtil.forbidden(response, new Exception403("권한이 없습니다"));
         });
 
         // 11. 인증, 권한 필터 설정

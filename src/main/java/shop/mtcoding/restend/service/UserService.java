@@ -51,15 +51,19 @@ public class UserService {
 
     @MyLog
     public String 로그인(UserRequest.LoginInDTO loginInDTO) {
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
-                = new UsernamePasswordAuthenticationToken(loginInDTO.getUsername(), loginInDTO.getPassword());
-        Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
-        MyUserDetails myUserDetails = (MyUserDetails) authentication.getPrincipal();
-        return MyJwtProvider.create(myUserDetails.getUser());
+        try {
+            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
+                    = new UsernamePasswordAuthenticationToken(loginInDTO.getUsername(), loginInDTO.getPassword());
+            Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+            MyUserDetails myUserDetails = (MyUserDetails) authentication.getPrincipal();
+            return MyJwtProvider.create(myUserDetails.getUser());
+        }catch (Exception e){
+            throw new Exception401("인증되지 않았습니다");
+        }
     }
 
     @MyLog
-    public UserResponse.DetailOutDTO 유저상세보기(Long id) {
+    public UserResponse.DetailOutDTO 회원상세보기(Long id) {
         User userPS = userRepository.findById(id).orElseThrow(
                 ()-> new Exception400("id", "해당 유저를 찾을 수 없습니다")
 
