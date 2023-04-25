@@ -3,6 +3,8 @@ package shop.mtcoding.restend.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -10,11 +12,15 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.context.support.WithUserDetails;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import shop.mtcoding.restend.core.advice.MyLogAdvice;
 import shop.mtcoding.restend.core.advice.MyValidAdvice;
 import shop.mtcoding.restend.core.auth.jwt.MyJwtProvider;
+import shop.mtcoding.restend.core.auth.session.MyUserDetails;
 import shop.mtcoding.restend.core.config.MyFilterRegisterConfig;
 import shop.mtcoding.restend.core.config.MySecurityConfig;
 import shop.mtcoding.restend.core.dummy.DummyEntity;
@@ -31,8 +37,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * @WebMvcTest는 웹 계층 컴포넌트만 테스트
+ * @WebMvcTest는 웹 계층 컴포넌트만 테스트로 가져옴
  */
+
+@ActiveProfiles("test")
 @EnableAspectJAutoProxy // AOP 활성화
 @Import({
         MyValidAdvice.class,

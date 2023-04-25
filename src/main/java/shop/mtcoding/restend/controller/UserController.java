@@ -43,9 +43,9 @@ public class UserController {
 
     @GetMapping("/s/user/{id}")
     public ResponseEntity<?> detail(@PathVariable Long id, @AuthenticationPrincipal MyUserDetails myUserDetails) throws JsonProcessingException {
-        if(id.longValue() != myUserDetails.getUser().getId()){
-            throw new Exception403("권한이 없습니다");
-        }
+//        if(id.longValue() != myUserDetails.getUser().getId()){
+//            throw new Exception403("권한이 없습니다");
+//        }
         UserResponse.DetailOutDTO detailOutDTO = userService.유저상세보기(id);
         System.out.println(new ObjectMapper().writeValueAsString(detailOutDTO));
         ResponseDTO<?> responseDTO = new ResponseDTO<>(detailOutDTO);

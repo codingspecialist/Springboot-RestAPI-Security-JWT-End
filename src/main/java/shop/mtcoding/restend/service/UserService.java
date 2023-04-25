@@ -38,6 +38,7 @@ public class UserService {
         }
         String encPassword = passwordEncoder.encode(joinInDTO.getPassword()); // 60Byte
         joinInDTO.setPassword(encPassword);
+        System.out.println("encPassword : "+encPassword);
 
         // 디비 save 되는 쪽만 try catch로 처리하자.
         try {
