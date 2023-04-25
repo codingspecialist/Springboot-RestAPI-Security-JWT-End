@@ -57,6 +57,7 @@ public class UserService {
         return MyJwtProvider.create(myUserDetails.getUser());
     }
 
+    @MyLog
     public UserResponse.DetailOutDTO 유저상세보기(Long id) {
         User userPS = userRepository.findById(id).orElseThrow(
                 ()-> new Exception400("id", "해당 유저를 찾을 수 없습니다")

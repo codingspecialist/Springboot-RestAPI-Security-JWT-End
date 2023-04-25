@@ -12,21 +12,26 @@ import shop.mtcoding.restend.dto.ResponseDTO;
 @Slf4j
 @RestControllerAdvice
 public class MyExceptionAdvice {
+
+    @MyErrorLog
     @ExceptionHandler(Exception400.class)
     public ResponseEntity<?> badRequest(Exception400 e){
         return new ResponseEntity<>(e.body(), e.status());
     }
 
+    @MyErrorLog
     @ExceptionHandler(Exception401.class)
     public ResponseEntity<?> unAuthorized(Exception401 e){
         return new ResponseEntity<>(e.body(), e.status());
     }
 
+    @MyErrorLog
     @ExceptionHandler(Exception403.class)
     public ResponseEntity<?> forbidden(Exception403 e){
         return new ResponseEntity<>(e.body(), e.status());
     }
 
+    @MyErrorLog
     @ExceptionHandler(Exception404.class)
     public ResponseEntity<?> notFound(Exception404 e){
         return new ResponseEntity<>(e.body(), e.status());

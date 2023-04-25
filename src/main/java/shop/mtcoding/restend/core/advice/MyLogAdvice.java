@@ -31,7 +31,6 @@ public class MyLogAdvice {
     @Pointcut("@annotation(shop.mtcoding.restend.core.annotation.MyErrorLog)")
     public void myErrorLog(){}
 
-    // 서비스 메서드에 붙여서 서비스 에러시 로그 받기
     @AfterReturning("myLog()")
     public void logAdvice(JoinPoint jp) throws Exception {
         MethodSignature signature = (MethodSignature) jp.getSignature();
@@ -39,7 +38,6 @@ public class MyLogAdvice {
         log.debug("디버그 : "+method.getName()+" 성공");
     }
 
-    // 500 에러
     @Before("myErrorLog()")
     public void errorLogAdvice(JoinPoint jp) throws Exception {
         Object[] args = jp.getArgs();
