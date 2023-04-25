@@ -3,6 +3,7 @@ package shop.mtcoding.restend.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
@@ -15,9 +16,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.transaction.annotation.Transactional;
 import shop.mtcoding.restend.core.MyRestDoc;
 import shop.mtcoding.restend.core.auth.jwt.MyJwtProvider;
 import shop.mtcoding.restend.core.dummy.DummyEntity;
@@ -31,6 +30,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@DisplayName("회원 API")
 @AutoConfigureRestDocs(uriScheme = "http", uriHost = "localhost", uriPort = 8080)
 @ActiveProfiles("test")
 @Sql("classpath:db/teardown.sql")
@@ -56,6 +56,7 @@ public class UserControllerTest extends MyRestDoc {
         em.clear();
     }
 
+    @DisplayName("회원가입 성공")
     @Test
     public void join_test() throws Exception {
         // given
@@ -80,8 +81,9 @@ public class UserControllerTest extends MyRestDoc {
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
+    @DisplayName("회원가입 실패")
     @Test
-    public void join_badRequest_test() throws Exception {
+    public void join_fail_bad_request_test() throws Exception {
         // given
         UserRequest.JoinInDTO joinInDTO = new UserRequest.JoinInDTO();
         joinInDTO.setUsername("ssar");
@@ -105,6 +107,7 @@ public class UserControllerTest extends MyRestDoc {
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
+    @DisplayName("로그인 성공")
     @Test
     public void login_test() throws Exception {
         // given
@@ -126,8 +129,9 @@ public class UserControllerTest extends MyRestDoc {
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
+    @DisplayName("로그인 인증 실패")
     @Test
-    public void login_fail_unAuthorized_test() throws Exception {
+    public void login_fail_un_authorized_test() throws Exception {
         // given
         UserRequest.LoginInDTO loginInDTO = new UserRequest.LoginInDTO();
         loginInDTO.setUsername("ssar");
@@ -154,6 +158,7 @@ public class UserControllerTest extends MyRestDoc {
     // @WithUserDetails(value = "ssar", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     // authenticationManager.authenticate() 실행해서 MyUserDetailsService를 호출하고
     // usrename=ssar을 찾아서 세션에 담아주는 어노테이션
+    @DisplayName("회원상세보기 성공")
     @WithUserDetails(value = "ssar", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     @Test
     public void detail_test() throws Exception {
@@ -176,8 +181,9 @@ public class UserControllerTest extends MyRestDoc {
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
+    @DisplayName("회원상세보기 인증 실패")
     @Test
-    public void detail_fail_unAuthorized__test() throws Exception {
+    public void detail_fail_un_authorized__test() throws Exception {
         // given
         Long id = 1L;
 
@@ -195,9 +201,10 @@ public class UserControllerTest extends MyRestDoc {
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
+    @DisplayName("회원상세보기 권한 실패")
     @WithUserDetails(value = "cos", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     @Test
-    public void detail_fail_forbidden__test() throws Exception {
+    public void detail_fail_forbidden_test() throws Exception {
         // given
         Long id = 1L;
 

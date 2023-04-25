@@ -10,7 +10,7 @@ endif::[]
 :source-highlighter: highlightjs
 
 == 회원
-=== 1. 회원가입
+=== 1. 회원가입 (성공)
 ===== Request Example
 include::{snippets}/{user}/join_test/http-request.adoc[]
 
@@ -20,7 +20,17 @@ include::{snippets}/{user}/join_test/http-response.adoc[]
 ===== Curl
 include::{snippets}/{user}/join_test/curl-request.adoc[]
 
-=== 2. 로그인
+=== 2. 회원가입 (실패)
+===== Request Example
+include::{snippets}/{user}/join_fail_bad_request_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{user}/join_fail_bad_request_test/http-response.adoc[]
+
+===== Curl
+include::{snippets}/{user}/join_fail_bad_request_test/curl-request.adoc[]
+
+=== 3. 로그인 (성공)
 ===== Request Example
 include::{snippets}/{user}/login_test/http-request.adoc[]
 
@@ -30,7 +40,17 @@ include::{snippets}/{user}/login_test/http-response.adoc[]
 ===== Curl
 include::{snippets}/{user}/login_test/curl-request.adoc[]
 
-=== 3. 회원상세보기
+=== 4. 로그인 (실패)
+===== Request Example
+include::{snippets}/{user}/login_fail_un_authorized_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{user}/login_fail_un_authorized_test/http-response.adoc[]
+
+===== Curl
+include::{snippets}/{user}/login_fail_un_authorized_test/curl-request.adoc[]
+
+=== 5. 회원상세보기 (성공)
 ===== Request Example
 include::{snippets}/{user}/detail_test/http-request.adoc[]
 
@@ -39,3 +59,22 @@ include::{snippets}/{user}/detail_test/http-response.adoc[]
 
 ===== Curl
 include::{snippets}/{user}/detail_test/curl-request.adoc[]
+
+==== 6. 회원상세보기 (실패)
+===== Request Example
+include::{snippets}/{user}/detail_fail_un_authorized__test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{user}/detail_fail_un_authorized__test/http-response.adoc[]
+
+===== Curl
+include::{snippets}/{user}/detail_fail_un_authorized__test/curl-request.adoc[]
+
+===== Request Example
+include::{snippets}/{user}/detail_fail_forbidden_test/http-request.adoc[]
+
+===== Response Example
+include::{snippets}/{user}/detail_fail_forbidden_test/http-response.adoc[]
+
+===== Curl
+include::{snippets}/{user}/detail_fail_forbidden_test/curl-request.adoc[]

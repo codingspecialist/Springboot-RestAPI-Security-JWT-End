@@ -467,14 +467,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /join HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Content-Length: 105
+Content-Length: 107
 Host: localhost:8080
 
 {
-  "username" : "cos",
+  "username" : "love",
   "password" : "1234",
-  "email" : "cos@nate.com",
-  "fullName" : "코스"
+  "email" : "love@nate.com",
+  "fullName" : "러브"
 }</code></pre>
 </div>
 </div>
@@ -493,15 +493,15 @@ X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
-Content-Length: 130
+Content-Length: 131
 
 {
   "status" : 200,
   "msg" : "성공",
   "data" : {
-    "id" : 2,
-    "username" : "cos",
-    "fullName" : "코스"
+    "id" : 3,
+    "username" : "love",
+    "fullName" : "러브"
   }
 }</code></pre>
 </div>
@@ -514,10 +514,10 @@ Content-Length: 130
 <pre class="highlightjs highlight"><code data-lang="bash" class="language-bash hljs">$ curl 'http://localhost:8080/join' -i -X POST \
     -H 'Content-Type: application/json;charset=UTF-8' \
     -d '{
-  "username" : "cos",
+  "username" : "love",
   "password" : "1234",
-  "email" : "cos@nate.com",
-  "fullName" : "코스"
+  "email" : "love@nate.com",
+  "fullName" : "러브"
 }'</code></pre>
 </div>
 </div>
@@ -549,7 +549,7 @@ Host: localhost:8080
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3RzdHVkeSIsInJvbGUiOiJVU0VSIiwiaWQiOjEsImV4cCI6MTY4MjQ5MDA2NH0.P9t7NjKPo53l8tyGC2lQI3y8hr6gg3c57ff1I_EcPUKH3q1CCmxaf-No4_Nx3yecqHrdkjjOFCKuh7kB6pi4aw
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqd3RzdHVkeSIsInJvbGUiOiJVU0VSIiwiaWQiOjEsImV4cCI6MTY4MjQ5MjA4M30.7utBDaNdbx920d9BXzfVRR_twJ2WuynLGl6RrtuhcTJpn_pfx6MCALKNoN0UYsX3v2l_8ZpNPWQq3wfmu8z17Q
 Content-Type: application/json;charset=UTF-8
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
