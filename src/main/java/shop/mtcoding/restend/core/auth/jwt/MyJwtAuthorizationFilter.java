@@ -36,6 +36,7 @@ public class MyJwtAuthorizationFilter extends BasicAuthenticationFilter {
 
         String jwt = prefixJwt.replace(MyJwtProvider.TOKEN_PREFIX, "");
         try {
+            System.out.println("디버그 : 토큰 있음");
             DecodedJWT decodedJWT = MyJwtProvider.verify(jwt);
             Long id = decodedJWT.getClaim("id").asLong();
             String role = decodedJWT.getClaim("role").asString();
@@ -49,6 +50,7 @@ public class MyJwtAuthorizationFilter extends BasicAuthenticationFilter {
                             myUserDetails.getAuthorities()
                     );
             SecurityContextHolder.getContext().setAuthentication(authentication);
+            System.out.println("디버그 : 인증 객체 만들어짐");
         } catch (SignatureVerificationException sve) {
             log.error("토큰 검증 실패");
         } catch (TokenExpiredException tee) {

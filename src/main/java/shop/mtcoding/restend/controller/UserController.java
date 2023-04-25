@@ -24,14 +24,14 @@ public class UserController {
     @PostMapping("/join")
     public ResponseEntity<?> join(@RequestBody @Valid UserRequest.JoinInDTO joinInDTO, Errors errors) {
         UserResponse.JoinOutDTO joinOutDTO = userService.회원가입(joinInDTO);
-        ResponseDTO<?> responseDTO = new ResponseDTO<>().data(joinOutDTO);
+        ResponseDTO<?> responseDTO = new ResponseDTO<>(joinOutDTO);
         return ResponseEntity.ok(responseDTO);
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserRequest.LoginInDTO loginInDTO){
         String jwt = userService.로그인(loginInDTO);
-        ResponseDTO<?> responseDTO = new ResponseDTO<>().data("로그인완료");
+        ResponseDTO<?> responseDTO = new ResponseDTO<>();
         return ResponseEntity.ok().header(MyJwtProvider.HEADER, jwt).body(responseDTO);
     }
 
@@ -40,8 +40,8 @@ public class UserController {
         if(id.longValue() != myUserDetails.getUser().getId()){
             throw new Exception403("권한이 없습니다");
         }
-        UserResponse.DetailOutDTO DetailOutDTO  = userService.유저상세보기(id);
-        ResponseDTO<?> responseDTO = new ResponseDTO<>().data(DetailOutDTO);
+        UserResponse.DetailOutDTO detailOutDTO = userService.유저상세보기(id);
+        ResponseDTO<?> responseDTO = new ResponseDTO<>(detailOutDTO);
         return ResponseEntity.ok(responseDTO);
     }
 }

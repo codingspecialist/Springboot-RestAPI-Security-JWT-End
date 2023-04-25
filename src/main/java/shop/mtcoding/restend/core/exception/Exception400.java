@@ -20,10 +20,8 @@ public class Exception400 extends RuntimeException {
     }
 
     public ResponseDTO<?> body(){
-        ResponseDTO<ValidDTO> responseDto = new ResponseDTO<>();
         ValidDTO validDTO = new ValidDTO(key, value);
-        responseDto.fail(HttpStatus.BAD_REQUEST, "badRequest", validDTO);
-        return responseDto;
+        return new ResponseDTO<>(HttpStatus.BAD_REQUEST, "badRequest", validDTO);
     }
 
     public HttpStatus status(){

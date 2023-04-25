@@ -12,9 +12,7 @@ public class Exception500 extends RuntimeException {
     }
 
     public ResponseDTO<?> body(){
-        ResponseDTO<String> responseDTO = new ResponseDTO<>();
-        responseDTO.fail(HttpStatus.INTERNAL_SERVER_ERROR, "serverError", getMessage());
-        return responseDTO;
+        return new ResponseDTO<>(HttpStatus.INTERNAL_SERVER_ERROR, "serverError", getMessage());
     }
 
     public HttpStatus status(){

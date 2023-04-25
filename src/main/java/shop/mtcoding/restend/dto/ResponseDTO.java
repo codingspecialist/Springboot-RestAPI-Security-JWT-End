@@ -2,6 +2,7 @@ package shop.mtcoding.restend.dto;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
+import shop.mtcoding.restend.dto.user.UserResponse;
 
 @Getter
 public class ResponseDTO<T> {
@@ -12,18 +13,17 @@ public class ResponseDTO<T> {
     public ResponseDTO(){
         this.status = HttpStatus.OK.value();
         this.msg = "성공";
-        this.data = null;
     }
 
-    public ResponseDTO<?> data(T data){
+    public ResponseDTO(T data){
+        this.status = HttpStatus.OK.value();
+        this.msg = "성공";
         this.data = data; // 응답할 데이터 바디
-        return this;
     }
 
-    public ResponseDTO<?> fail(HttpStatus httpStatus, String msg, T data){
+    public ResponseDTO(HttpStatus httpStatus, String msg, T data){
         this.status = httpStatus.value();
         this.msg = msg; // 에러 제목
         this.data = data; // 에러 내용
-        return this;
     }
 }

@@ -14,9 +14,7 @@ public class Exception401 extends RuntimeException {
     }
 
     public ResponseDTO<?> body(){
-        ResponseDTO<String> responseDto = new ResponseDTO<>();
-        responseDto.fail(HttpStatus.UNAUTHORIZED, "unAuthorized", getMessage());
-        return responseDto;
+        return new ResponseDTO<>(HttpStatus.UNAUTHORIZED, "unAuthorized", getMessage());
     }
 
     public HttpStatus status(){

@@ -13,9 +13,7 @@ public class Exception403 extends RuntimeException {
     }
 
     public ResponseDTO<?> body(){
-        ResponseDTO<String> responseDto = new ResponseDTO<>();
-        responseDto.fail(HttpStatus.FORBIDDEN, "forbidden", getMessage());
-        return responseDto;
+        return new ResponseDTO<>(HttpStatus.FORBIDDEN, "forbidden", getMessage());
     }
 
     public HttpStatus status(){

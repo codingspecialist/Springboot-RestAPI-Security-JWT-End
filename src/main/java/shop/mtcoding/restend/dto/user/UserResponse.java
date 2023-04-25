@@ -5,6 +5,7 @@ import lombok.Setter;
 import shop.mtcoding.restend.model.user.User;
 
 public class UserResponse {
+    @Getter @Setter
     public static class DetailOutDTO{
         private Long id;
         private String username;

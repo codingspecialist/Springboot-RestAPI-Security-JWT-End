@@ -26,9 +26,13 @@ public class UserService {
     @MyLog
     @Transactional
     public UserResponse.JoinOutDTO 회원가입(UserRequest.JoinInDTO joinInDTO){
+        Optional<User> userOP =userRepository.findByUsername(joinInDTO.getUsername());
+        if(userOP.isPresent()){
+            throw new Exception400("username", "유저네임이 존재합니다");
+        }
+        String encPassword = passwordEncoder.encode(joinInDTO.getPassword()); // 60Byte
+        joinInDTO.setPassword(encPassword);
         try {
-            String encPassword = passwordEncoder.encode(joinInDTO.getPassword()); // 60Byte
-            joinInDTO.setPassword(encPassword);
             User userPS = userRepository.save(joinInDTO.toEntity());
             return new UserResponse.JoinOutDTO(userPS);
         }catch (Exception e){

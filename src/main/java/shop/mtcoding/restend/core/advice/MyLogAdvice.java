@@ -9,6 +9,7 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import shop.mtcoding.restend.core.auth.session.MyUserDetails;
@@ -30,17 +31,17 @@ public class MyLogAdvice {
     @Pointcut("@annotation(shop.mtcoding.restend.core.annotation.MyErrorLog)")
     public void myErrorLog(){}
 
-    // 서비스 메서드에 붙여서 서비스 에러시 로그 받기 (추후 DB로 저장하거나, 파일로 옮기면됨)
+    // 서비스 메서드에 붙여서 서비스 에러시 로그 받기
     @AfterReturning("myLog()")
-    public void logAdvice(JoinPoint jp) throws HttpMessageNotReadableException {
+    public void logAdvice(JoinPoint jp) throws Exception {
         MethodSignature signature = (MethodSignature) jp.getSignature();
         Method method = signature.getMethod();
         log.debug("디버그 : "+method.getName()+" 성공");
     }
 
-    // 500 에러시에 붙이기 (추후 DB로 저장하거나, 파일로 옮기면됨)
+    // 500 에러
     @Before("myErrorLog()")
-    public void errorLogAdvice(JoinPoint jp) throws HttpMessageNotReadableException {
+    public void errorLogAdvice(JoinPoint jp) throws Exception {
         Object[] args = jp.getArgs();
 
         for (Object arg : args) {

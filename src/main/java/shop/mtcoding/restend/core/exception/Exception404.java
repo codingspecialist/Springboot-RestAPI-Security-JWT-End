@@ -13,9 +13,7 @@ public class Exception404 extends RuntimeException {
     }
 
     public ResponseDTO<?> body(){
-        ResponseDTO<String> responseDto = new ResponseDTO<>();
-        responseDto.fail(HttpStatus.NOT_FOUND, "notFound", getMessage());
-        return responseDto;
+        return new ResponseDTO<>(HttpStatus.NOT_FOUND, "notFound", getMessage());
     }
 
     public HttpStatus status(){
