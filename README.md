@@ -29,3 +29,6 @@ Spring은 IoC 컨테이너를 통해 애플리케이션 개발에 필요한 객�
 
 ## 4. API 문서 만들기
 https://github.com/codingspecialist/Springboot-Gradle-RestDoc
+
+## 5. 문서 보는법
+http://localhost:8080/docs/api-docs.html

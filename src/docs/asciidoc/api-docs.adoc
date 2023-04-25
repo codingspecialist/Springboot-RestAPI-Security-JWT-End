@@ -20,7 +20,7 @@ include::{snippets}/{user}/join_test/http-response.adoc[]
 ===== Curl
 include::{snippets}/{user}/join_test/curl-request.adoc[]
 
-=== 2. 회원가입 (실패)
+=== 2. 회원가입 (유저네임 중복 실패)
 ===== Request Example
 include::{snippets}/{user}/join_fail_bad_request_test/http-request.adoc[]
 
@@ -40,7 +40,7 @@ include::{snippets}/{user}/login_test/http-response.adoc[]
 ===== Curl
 include::{snippets}/{user}/login_test/curl-request.adoc[]
 
-=== 4. 로그인 (실패)
+=== 4. 로그인 (인증 실패)
 ===== Request Example
 include::{snippets}/{user}/login_fail_un_authorized_test/http-request.adoc[]
 
@@ -60,7 +60,7 @@ include::{snippets}/{user}/detail_test/http-response.adoc[]
 ===== Curl
 include::{snippets}/{user}/detail_test/curl-request.adoc[]
 
-==== 6. 회원상세보기 (실패)
+=== 6. 회원상세보기 (인증 안됨 실패)
 ===== Request Example
 include::{snippets}/{user}/detail_fail_un_authorized__test/http-request.adoc[]
 
@@ -70,6 +70,7 @@ include::{snippets}/{user}/detail_fail_un_authorized__test/http-response.adoc[]
 ===== Curl
 include::{snippets}/{user}/detail_fail_un_authorized__test/curl-request.adoc[]
 
+=== 7. 회원상세보기 (권한 없음 실패)
 ===== Request Example
 include::{snippets}/{user}/detail_fail_forbidden_test/http-request.adoc[]
 
