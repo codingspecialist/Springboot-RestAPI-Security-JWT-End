@@ -4,10 +4,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import shop.mtcoding.restend.model.user.User;
 
 public class DummyEntity {
-
-    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
     protected User newUser(String username){
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return User.builder()
                 .username(username)
                 .password(passwordEncoder.encode("1234"))

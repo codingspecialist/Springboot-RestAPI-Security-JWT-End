@@ -8,10 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.TestExecutionEvent;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import shop.mtcoding.restend.core.auth.jwt.MyJwtProvider;
 import shop.mtcoding.restend.core.dummy.DummyEntity;
 import shop.mtcoding.restend.dto.user.UserRequest;
@@ -19,7 +22,9 @@ import shop.mtcoding.restend.model.user.UserRepository;
 
 import javax.persistence.EntityManager;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ActiveProfiles("test")
@@ -60,6 +65,9 @@ public class UserControllerTest extends DummyEntity {
         System.out.println("테스트 : " + responseBody);
 
         // then
+        resultActions.andExpect(jsonPath("$.data.id").value(2L));
+        resultActions.andExpect(jsonPath("$.data.username").value("cos"));
+        resultActions.andExpect(jsonPath("$.data.fullName").value("코스"));
         resultActions.andExpect(status().isOk());
     }
 
@@ -67,7 +75,7 @@ public class UserControllerTest extends DummyEntity {
     public void login_test() throws Exception {
         // given
         UserRequest.LoginInDTO loginInDTO = new UserRequest.LoginInDTO();
-        loginInDTO.setUsername("cos");
+        loginInDTO.setUsername("ssar");
         loginInDTO.setPassword("1234");
         String requestBody = om.writeValueAsString(loginInDTO);
 
@@ -90,5 +98,24 @@ public class UserControllerTest extends DummyEntity {
     // 세션에
     // 담아주는 어노테이션!!
     // UserDetail 테스트 하기
+    @WithUserDetails(value = "ssar", setupBefore = TestExecutionEvent.TEST_EXECUTION) // 디비에서 username=ssar 조회를 해서
+    @Test
+    public void detail_test() throws Exception {
+        // given
+        Long id = 1L;
 
+        // when
+        ResultActions resultActions = mvc
+                .perform(get("/s/user/"+id));
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // then
+        resultActions.andExpect(jsonPath("$.data.id").value(1L));
+        resultActions.andExpect(jsonPath("$.data.username").value("ssar"));
+        resultActions.andExpect(jsonPath("$.data.email").value("ssar@nate.com"));
+        resultActions.andExpect(jsonPath("$.data.fullName").value("ssar님"));
+        resultActions.andExpect(jsonPath("$.data.role").value("USER"));
+        resultActions.andExpect(status().isOk());
+    }
 }

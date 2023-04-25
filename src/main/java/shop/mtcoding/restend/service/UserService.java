@@ -1,11 +1,15 @@
 package shop.mtcoding.restend.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shop.mtcoding.restend.core.annotation.MyLog;
 import shop.mtcoding.restend.core.auth.jwt.MyJwtProvider;
+import shop.mtcoding.restend.core.auth.session.MyUserDetails;
 import shop.mtcoding.restend.core.exception.Exception400;
 import shop.mtcoding.restend.core.exception.Exception401;
 import shop.mtcoding.restend.core.exception.Exception500;
@@ -20,6 +24,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 public class UserService {
+    private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
@@ -28,10 +33,13 @@ public class UserService {
     public UserResponse.JoinOutDTO 회원가입(UserRequest.JoinInDTO joinInDTO){
         Optional<User> userOP =userRepository.findByUsername(joinInDTO.getUsername());
         if(userOP.isPresent()){
+            // 이 부분이 try catch 안에 있으면 Exception500에게 제어권을 뺏긴다.
             throw new Exception400("username", "유저네임이 존재합니다");
         }
         String encPassword = passwordEncoder.encode(joinInDTO.getPassword()); // 60Byte
         joinInDTO.setPassword(encPassword);
+
+        // 디비 save 되는 쪽만 try catch로 처리하자.
         try {
             User userPS = userRepository.save(joinInDTO.toEntity());
             return new UserResponse.JoinOutDTO(userPS);
@@ -42,17 +50,11 @@ public class UserService {
 
     @MyLog
     public String 로그인(UserRequest.LoginInDTO loginInDTO) {
-        Optional<User> userOP = userRepository.findByUsername(loginInDTO.getUsername());
-        if(userOP.isPresent()){
-            User userPS = userOP.get();
-            if(passwordEncoder.matches(loginInDTO.getPassword(), userPS.getPassword())){
-                String jwt = MyJwtProvider.create(userPS);
-                return jwt;
-            }
-            throw new Exception401("패스워드 틀렸어");
-        }else{
-            throw new Exception401("유저네임 없어");
-        }
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
+                = new UsernamePasswordAuthenticationToken(loginInDTO.getUsername(), loginInDTO.getPassword());
+        Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+        MyUserDetails myUserDetails = (MyUserDetails) authentication.getPrincipal();
+        return MyJwtProvider.create(myUserDetails.getUser());
     }
 
     public UserResponse.DetailOutDTO 유저상세보기(Long id) {
