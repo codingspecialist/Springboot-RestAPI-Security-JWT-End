@@ -74,3 +74,18 @@ https://github.com/codingspecialist/Springboot-Gradle-RestDoc
 
 ## 7. 문서 보는법
 http://localhost:8080/docs/api-docs.html
+
+## 8. 스프링부트 배포
+
+### 8.1 gradle 빌드하기
+./gradlew clean build
+
+### 8.2 plain 파일 생성안하기 (build.gradle 파일)
+jar {
+  enabled = false
+}
+
+### 8.3 prod로 실행
+java -Dspring.profiles.active=prod -jar restend-0.0.1-SNAPSHOT.jar
+리눅스에서는 아래와 같이 *로 실행이 가능하다.
+java -Dspring.profiles.active=prod -jar *.jar

@@ -38,6 +38,7 @@ public class MySecurityConfig {
         public void configure(HttpSecurity builder) throws Exception {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
             builder.addFilter(new MyJwtAuthorizationFilter(authenticationManager));
+            // 시큐리티 관련 필터
             super.configure(builder);
         }
     }
