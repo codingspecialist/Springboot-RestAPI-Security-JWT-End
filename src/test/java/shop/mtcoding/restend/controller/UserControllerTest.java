@@ -107,6 +107,32 @@ public class UserControllerTest extends MyRestDoc {
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
+    @DisplayName("회원가입 유효성 검사 실패")
+    @Test
+    public void join_fail_valid_test() throws Exception {
+        // given
+        UserRequest.JoinInDTO joinInDTO = new UserRequest.JoinInDTO();
+        joinInDTO.setUsername("s");
+        joinInDTO.setPassword("1234");
+        joinInDTO.setEmail("ssar@nate.com");
+        joinInDTO.setFullName("쌀");
+        String requestBody = om.writeValueAsString(joinInDTO);
+
+        // when
+        ResultActions resultActions = mvc
+                .perform(post("/join").content(requestBody).contentType(MediaType.APPLICATION_JSON));
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // then
+        resultActions.andExpect(jsonPath("$.status").value(400));
+        resultActions.andExpect(jsonPath("$.msg").value("badRequest"));
+        resultActions.andExpect(jsonPath("$.data.key").value("username"));
+        resultActions.andExpect(jsonPath("$.data.value").value("영문/숫자 2~20자 이내로 작성해주세요"));
+        resultActions.andExpect(status().isBadRequest());
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
+    }
+
     @DisplayName("로그인 성공")
     @Test
     public void login_test() throws Exception {

@@ -28,7 +28,7 @@ import static org.mockito.ArgumentMatchers.any;
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest extends DummyEntity {
 
-    // 가짜 userService 객체를 만들고 Mock로 Load된 모든 객체를 userService에 주입
+    // 진짜 userService 객체를 만들고 Mock로 Load된 모든 객체를 userService에 주입
     @InjectMocks
     private UserService userService;
 
@@ -45,7 +45,15 @@ public class UserServiceTest extends DummyEntity {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Test
+    public void hello_test(){
+        String pw = "1234";
+        String enc = bCryptPasswordEncoder.encode(pw);
+        System.out.println(enc);
+    }
+
+    @Test
     public void 회원가입_test() throws Exception{
+
         // given
         UserRequest.JoinInDTO joinInDTO = new UserRequest.JoinInDTO();
         joinInDTO.setUsername("cos");

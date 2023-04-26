@@ -10,6 +10,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -57,7 +59,7 @@ public class UserControllerUnitTest extends DummyEntity {
 
     @Test
     public void join_test() throws Exception {
-        // given
+        // 준비
         UserRequest.JoinInDTO joinInDTO = new UserRequest.JoinInDTO();
         joinInDTO.setUsername("cos");
         joinInDTO.setPassword("1234");
@@ -65,18 +67,18 @@ public class UserControllerUnitTest extends DummyEntity {
         joinInDTO.setFullName("코스");
         String requestBody = om.writeValueAsString(joinInDTO);
 
-        // stub
+        // 가정해볼께
         User cos = newMockUser(1L,"cos", "코스");
         UserResponse.JoinOutDTO joinOutDTO = new UserResponse.JoinOutDTO(cos);
         Mockito.when(userService.회원가입(any())).thenReturn(joinOutDTO);
 
-        // when
+        // 테스트진행
         ResultActions resultActions = mvc
                 .perform(post("/join").content(requestBody).contentType(MediaType.APPLICATION_JSON));
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
         System.out.println("테스트 : " + responseBody);
 
-        // then
+        // 검증해볼께
         resultActions.andExpect(jsonPath("$.data.id").value(1L));
         resultActions.andExpect(jsonPath("$.data.username").value("cos"));
         resultActions.andExpect(jsonPath("$.data.fullName").value("코스"));
@@ -107,6 +109,7 @@ public class UserControllerUnitTest extends DummyEntity {
     }
 
     @MyWithMockUser(id = 1L, username = "cos", role = "USER", fullName = "코스")
+    //@WithMockUser(value = "ssar", password = "1234", roles = "USER")
     @Test
     public void detail_test() throws Exception {
         // given
