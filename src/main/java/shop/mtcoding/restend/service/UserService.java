@@ -12,6 +12,7 @@ import shop.mtcoding.restend.core.auth.jwt.MyJwtProvider;
 import shop.mtcoding.restend.core.auth.session.MyUserDetails;
 import shop.mtcoding.restend.core.exception.Exception400;
 import shop.mtcoding.restend.core.exception.Exception401;
+import shop.mtcoding.restend.core.exception.Exception404;
 import shop.mtcoding.restend.core.exception.Exception500;
 import shop.mtcoding.restend.dto.user.UserRequest;
 import shop.mtcoding.restend.dto.user.UserResponse;
@@ -65,7 +66,7 @@ public class UserService {
     @MyLog
     public UserResponse.DetailOutDTO 회원상세보기(Long id) {
         User userPS = userRepository.findById(id).orElseThrow(
-                ()-> new Exception400("id", "해당 유저를 찾을 수 없습니다")
+                ()-> new Exception404("해당 유저를 찾을 수 없습니다")
 
         );
         return new UserResponse.DetailOutDTO(userPS);
